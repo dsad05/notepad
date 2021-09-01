@@ -34,11 +34,11 @@ app.on('ready', () => {
           accelerator: `${ctrl}+N`,
           click: () => createTab(),           // add createTab func & createWindow func
         },
-        // {
-        //   label: "New window",         
-        // accelerator: `${ctrl}+Shift+N`,
-        //   click: () => createWindow(),
-        // },
+         {
+           label: "New window",         
+         accelerator: `${ctrl}+Shift+N`,
+           click: () => createWindow(),
+         },
         {
           label: "Open",
           accelerator: `${ctrl}+O`,
@@ -98,6 +98,13 @@ app.on('ready', () => {
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
 });
+
+const handleError = () => {
+  new Notification({
+    title: "Error",
+    body: "Sorry, something went wrong :(",
+  }).show();
+};
 
 const openFile = (filePath) => {
     fs.readFile(filePath, "utf8", (content) => {
