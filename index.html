@@ -12,7 +12,6 @@
   <nav>
     <section class="menu">
         <div class="title-bar">
-            <span class="document-name" id="documentName">No file selected</span>
             <div class="menu-section">
               <button id="openDocumentBtn">
                 <span class="material-icons"> launch </span>
@@ -21,6 +20,7 @@
                 <span class="material-icons"> note_add </span>
               </button>
             </div>
+            <span class="document-name" id="documentName">No file selected</span>
         </div>
         <button id="undo">Undo</button>
         <button id="redo">Redo</button>
@@ -31,12 +31,12 @@
           <option value="monospace">Monospace</option>
         </select>
         <select title="Size" class="ql-size">
-          <option value="10px">Small</option>
-          <option value="13px" selected="">Normal</option>
-          <option value="18px">Large</option>
-          <option value="32px">Huge</option>
+          <option value="10px">10</option>
+          <option value="12px" selected="">12</option>
+          <option value="18px">18</option>
+          <option value="32px">32</option>
         </select>
-        <input type="number" name="Font size" id="size" value="12" min="1" max="72">
+        <!-- <input type="number" name="Font size" id="size" value="12" min="1" max="72"> -->
         <button id="bold">Bold</button>
         <button id="italic">Italic</button>
         <button id="underline">Underline</button>
@@ -111,7 +111,7 @@
     //     document.getElementById("linesCounter").innerText = numLines;
     // });
 
-    //paragraph counter
+    //paragraphs counter
     document.getElementById("fileTextarea").addEventListener("keydown", function countPar() {
       let my_data = this.value.split("\n\n");
       let g = my_data.length;
