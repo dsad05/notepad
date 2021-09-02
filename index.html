@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="./style.css" />
     <script src="renderer.js" defer></script>
   </head>
-<body>
+  <header>
+  <nav>
     <section class="menu">
         <div class="title-bar">
             <span class="document-name" id="documentName">No file selected</span>
@@ -20,9 +21,7 @@
                 <span class="material-icons"> note_add </span>
               </button>
             </div>
-          </div>
-        </section>
-        <section>
+        </div>
         <button id="undo">Undo</button>
         <button id="redo">Redo</button>
         <button id="print">Print</button>
@@ -45,49 +44,89 @@
         <button id="highlight-color">Highlight color</button>
         <button id="link">Insert link</button>
         <button id="link">Line spacing</button>
-        <button onclick="countWords()">Count Words</button>
-        Signs Count: <span id="signsCounter">0</span>
-        Letters Count: <span id="lettersCounter">0</span>
-        Words Count: <span id="wordsCounter">0</span>
-        Paragraphs Count: <span id="paragraphsCounter">0</span>
+        <!-- <button onclick="countWords()">Count Words</button> -->
     </section>
+    </nav>
+  </header>
+    <body>
     <section>
         <main>
-            <textarea id="fileTextarea" disabled></textarea>
+            <textarea id="fileTextarea" cols="120" rows='120' disabled></textarea>
         </main>
     </section>
-
+    <footer>
+      Signs: <span id="signsCounter">0</span>
+      Letters: <span id="lettersCounter">0</span>
+      Words: <span id="wordsCounter">0</span>
+      <!-- Lines:  <span id="linesCounter">0</span> -->
+      Paragraphs: <span id="paragraphsCounter">0</span>
+      </footer>
+    </body>
     <script>
 
     //signs counter
     document.getElementById("fileTextarea").addEventListener("keyup", function countSigns() {
-        let text = document.getElementById("fileTextarea").value;
-        let numSigns = text.length;
-        document.getElementById("signsCounter").innerText = numSigns;
+      let text = document.getElementById("fileTextarea").value;
+      let numSigns = text.length;
+      document.getElementById("signsCounter").innerText = numSigns;
     });
 
     //letters counter
     document.getElementById("fileTextarea").addEventListener("keyup", function countLetters() {
-        let text = document.getElementById("fileTextarea").value;
-        let numLetters = this.value.match(/[a-zęśąćż]/gi).length;    // flags :g - globally throughout the whole string; i - getting upper and lowercase
-        document.getElementById("lettersCounter").innerText = numLetters;
+      let numLetters = this.value.match(/[a-zęśąćż]/gi).length;    // flags :g - globally throughout the whole string; i - getting upper and lowercase
+      document.getElementById("lettersCounter").innerText = numLetters;
     });
 
     //words counter
     document.getElementById("fileTextarea").addEventListener("keyup", function countWord() {
-        let res = [];
-        let str = this.value.replace(/[\t\n\r\.\?\!]/gm, " ").split(" ");
+        let numWords = [];
+        let str = this.value.replace(/[[\t][\r][\n][\. ][\? ][\! ]]/gm, " ").split(" ");
         str.map((s) => {
             let trimStr = s.trim();
             if (trimStr.length > 0) {
-                res.push(trimStr);
+              numWords.push(trimStr);
             }
-        });
-        document.getElementById("wordsCounter").innerText = res.length;
+          });
+        // let str1 = this.value.replace(/[\n]/gm, "\n").split("\n");
+        // str1.map((s) => {
+        //     let trimStr = s.trim();
+        //     if (trimStr.length > 0) {
+        //       numWords.push(trimStr);
+        //     }
+        // });
+        document.getElementById("wordsCounter").innerText = numWords.length;
     });
 
-    //paragraphs counter
+    // //lines counter
+    // document.getElementById("fileTextarea").addEventListener("keydown", function countLines() {
+    //     // let numPar = [];
+    //     // let str2 = this.value.split(/"\n\t"/g);
+    //     // str2.map((s) => {
+    //     //     let trimStr2 = s.trim();
+    //     //     if (trimStr2.length > 0) {
+    //     //         numPar.push(trimStr2);
+    //     //     }
+    //     // });
+    //     let numLines = this.value.replace(/\n$/gm, '').split(/\n/).length;
+    //     document.getElementById("linesCounter").innerText = numLines;
+    // });
 
+    //paragraph counter
+    document.getElementById("fileTextarea").addEventListener("keydown", function countPar() {
+      let my_data = this.value.split("\n\n");
+      let g = my_data.length;
+      let numPar = 0;
+      let strip_whitespace = /\s+/gi;        //\s+ will match one or more whitespace characters
+      while (g >=0) {
+        g--;
+        let tmp = my_data[g];
+        tmp = tmp ? tmp .replace(strip_whitespace,"") : tmp;
+        if(tmp && tmp.length > 1) {
+            numPar++;
+        }   
+      }
+      document.getElementById("paragraphsCounter").innerText = numPar;
+    });
 
     //use tabs to indent
     document.getElementById("fileTextarea").addEventListener("keydown", function(indent) {
@@ -105,4 +144,3 @@
     }
     });
     </script>
-</body>
