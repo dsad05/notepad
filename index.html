@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Text Editor</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons"/>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./style.css" />
     <script src="renderer.js" defer></script>
   </head>
 <body>
@@ -46,7 +46,10 @@
         <button id="link">Insert link</button>
         <button id="link">Line spacing</button>
         <button onclick="countWords()">Count Words</button>
-        Word Count: <span id="show">0</span>
+        Signs Count: <span id="signsCounter">0</span>
+        Letters Count: <span id="lettersCounter">0</span>
+        Words Count: <span id="wordsCounter">0</span>
+        Paragraphs Count: <span id="paragraphsCounter">0</span>
     </section>
     <section>
         <main>
@@ -55,18 +58,51 @@
     </section>
 
     <script>
-          document.querySelector("#fileTextarea").addEventListener("keyup", function countWord() {
-    let res = [];
-    let str = this.value.replace(/[\t\n\r\.\?\!]/gm, " ").split(" ");
-    str.map((s) => {
-      let trimStr = s.trim();
-      if (trimStr.length > 0) {
-        res.push(trimStr);
-      }
+
+    //signs counter
+    document.getElementById("fileTextarea").addEventListener("keyup", function countSigns() {
+        let text = document.getElementById("fileTextarea").value;
+        let numSigns = text.length;
+        document.getElementById("signsCounter").innerText = numSigns;
     });
-    document.querySelector("#show").innerText = res.length;
-  });
+
+    //letters counter
+    document.getElementById("fileTextarea").addEventListener("keyup", function countLetters() {
+        let text = document.getElementById("fileTextarea").value;
+        let numLetters = this.value.match(/[a-zęśąćż]/gi).length;    // flags :g - globally throughout the whole string; i - getting upper and lowercase
+        document.getElementById("lettersCounter").innerText = numLetters;
+    });
+
+    //words counter
+    document.getElementById("fileTextarea").addEventListener("keyup", function countWord() {
+        let res = [];
+        let str = this.value.replace(/[\t\n\r\.\?\!]/gm, " ").split(" ");
+        str.map((s) => {
+            let trimStr = s.trim();
+            if (trimStr.length > 0) {
+                res.push(trimStr);
+            }
+        });
+        document.getElementById("wordsCounter").innerText = res.length;
+    });
+
+    //paragraphs counter
+
+
+    //use tabs to indent
+    document.getElementById("fileTextarea").addEventListener("keydown", function(indent) {
+    if (indent.key == "Tab") {
+        indent.preventDefault();
+        let start = this.selectionStart;
+        let end = this.selectionEnd;
+
+        // set textarea value to: text before caret + tab + text after caret
+        this.value = this.value.substring(0, start) +
+        "\t" + this.value.substring(end);
+
+        // put caret at right position again
+        this.selectionStart = this.selectionEnd = start + 1;
+    }
+    });
     </script>
 </body>
-
-
