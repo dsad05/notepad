@@ -107,16 +107,21 @@ const handleError = () => {
 };
 
 const openFile = (filePath) => {
-    fs.readFile(filePath, "utf8", (content) => {
-        app.addRecentDocument(filePath);
-        openedFilePath = filePath;
-        mainWindow.webContents.send("document:opened", { filePath, content });
-    });
+  fs.readFile(filePath, "utf8", (error, content) => {
+    if (error) {
+      handleError();
+    } else {
+      app.addRecentDocument(filePath);
+      openedFilePath = filePath;
+      mainWindow.webContents.send("document-opened", { filePath, content });
+    }
+  });
 };
   
 app.on("open-file", (_, filePath) => {
     openFile(filePath);
 });
+
 ipcMain.on("open-document-triggered", () => {
   dialog
     .showOpenDialog({
