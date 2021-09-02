@@ -58,7 +58,6 @@
       Signs: <span id="signsCounter">0</span>
       Letters: <span id="lettersCounter">0</span>
       Words: <span id="wordsCounter">0</span>
-      <!-- Lines:  <span id="linesCounter">0</span> -->
       Paragraphs: <span id="paragraphsCounter">0</span>
       </footer>
     </body>
@@ -80,36 +79,15 @@
     //words counter
     document.getElementById("fileTextarea").addEventListener("keyup", function countWord() {
         let numWords = [];
-        let str = this.value.replace(/[[\t][\r][\n][\. ][\? ][\! ]]/gm, " ").split(" ");
+        let str = this.value.replace(/[(^\s*)|(\s*$)[\. ][\? ][\! ]]/gm, " ").split(/\s+/gi);
         str.map((s) => {
             let trimStr = s.trim();
             if (trimStr.length > 0) {
               numWords.push(trimStr);
             }
           });
-        // let str1 = this.value.replace(/[\n]/gm, "\n").split("\n");
-        // str1.map((s) => {
-        //     let trimStr = s.trim();
-        //     if (trimStr.length > 0) {
-        //       numWords.push(trimStr);
-        //     }
-        // });
         document.getElementById("wordsCounter").innerText = numWords.length;
     });
-
-    // //lines counter
-    // document.getElementById("fileTextarea").addEventListener("keydown", function countLines() {
-    //     // let numPar = [];
-    //     // let str2 = this.value.split(/"\n\t"/g);
-    //     // str2.map((s) => {
-    //     //     let trimStr2 = s.trim();
-    //     //     if (trimStr2.length > 0) {
-    //     //         numPar.push(trimStr2);
-    //     //     }
-    //     // });
-    //     let numLines = this.value.replace(/\n$/gm, '').split(/\n/).length;
-    //     document.getElementById("linesCounter").innerText = numLines;
-    // });
 
     //paragraphs counter
     document.getElementById("fileTextarea").addEventListener("keydown", function countPar() {
@@ -134,13 +112,8 @@
         indent.preventDefault();
         let start = this.selectionStart;
         let end = this.selectionEnd;
-
-        // set textarea value to: text before caret + tab + text after caret
-        this.value = this.value.substring(0, start) +
-        "\t" + this.value.substring(end);
-
-        // put caret at right position again
-        this.selectionStart = this.selectionEnd = start + 1;
+        this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);       // set textarea value to: text before caret + tab + text after caret
+        this.selectionStart = this.selectionEnd = start + 1;                                   // put caret at right position again
     }
     });
     </script>

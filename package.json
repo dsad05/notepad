@@ -5,7 +5,7 @@
   "keywords": [],
   "main": "./index.js",
   "version": "1.0.0",
-  "author": "bn",
+  "author": "DorotaSadowska",
   "scripts": {
     "electron": "electron ."
   },
