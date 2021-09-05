@@ -10,10 +10,11 @@
     "electron": "electron ."
   },
   "dependencies": {
+    "electron-packager": "^15.3.0",
     "electron-reloader": "*"
   },
   "devDependencies": {
-    "electron": "^13.1.7"
+    "electron": "^13.3.0"
   },
   "repository": {
     "type": "git",
