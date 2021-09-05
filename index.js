@@ -123,7 +123,7 @@ const openFile = (filePath) => {
     if (error) {
       handleError();
     } else {
-      // app.addRecentDocument(filePath);
+      app.addRecentDocument(filePath);
       openedFilePath = filePath;
       mainWindow.webContents.send("document-opened", { filePath, content });
     }
@@ -142,7 +142,6 @@ ipcMain.on("open-document-triggered", () => {
     })
     .then(({ filePaths }) => {
       const filePath = filePaths[0];
-
       openFile(filePath);
     });
 });
@@ -170,9 +169,9 @@ ipcMain.on("create-document-triggered", (_, content) => {
   SaveAs(content);
 });
 
-ipcMain.on("file-content-updated", (_, textareaContent) => {
-  // On textarea change
-});
+// ipcMain.on("file-content-updated", (_, textareaContent) => {
+//   // On textarea change
+// });
 
 ipcMain.on("save-document-triggered", (_, content) => {
   try {

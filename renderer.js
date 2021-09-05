@@ -14,7 +14,6 @@ window.addEventListener("DOMContentLoaded", () => {
   
     const handleDocumentChange = (filePath) => {
       el.documentName.innerHTML = path.parse(filePath).base;
-      //el.fileTextarea.value = content;
       el.fileTextarea.focus();
     };
 
@@ -41,6 +40,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
     ipcRenderer.on("document-opened", (_, { filePath, content }) => {
+      el.fileTextarea.value = content;
       handleDocumentChange(filePath, content);
     });
   
