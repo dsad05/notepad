@@ -1,7 +1,7 @@
 {
-  "name": "notepad",
-  "productName": "notepad",
-  "description": "My Electron application description",
+  "name": "notepad2",
+  "productName": "Text Editor",
+  "description": "an electron app",
   "keywords": [],
   "main": "./index.js",
   "version": "1.0.0",
@@ -10,19 +10,20 @@
     "electron": "electron ."
   },
   "dependencies": {
-    "electron-packager": "^15.3.0",
-    "electron-reloader": "*"
+    "electron-packager": "^15.3.0"
   },
   "devDependencies": {
-    "electron": "^13.3.0"
+    "electron": "^13.3.0",
+    "electron-reload": "^2.0.0-alpha.1",
+    "electron-reloader": "^1.2.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dsad05/electron_text_editor.git"
+    "url": "git+https://github.com/dsad05/notepad2.git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dsad05/electron_text_editor/issues"
+    "url": "https://github.com/dsad05/notepad2/issues"
   },
-  "homepage": "https://github.com/dsad05/electron_text_editor#readme"
+  "homepage": "https://github.com/dsad05/notepad2#readme"
 }

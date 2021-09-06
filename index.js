@@ -25,10 +25,8 @@ if (env === 'development') {
 			watchRenderer: true
 		});
 	} catch (error) {
-    //console.log(error);
   }	
 }
-
 
 function createWindow () {
         mainWindow = new BrowserWindow({
@@ -39,7 +37,7 @@ function createWindow () {
           preload: path.join(app.getAppPath(), "renderer.js"),
         }
     });
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();                 DEBUGGER
     mainWindow.loadFile('index.html');
     mainWindow.on('closed', () => app.quit());
     var ctrl = process.platform === 'darwin' ? 'Command' : 'Control'; // if apple's OS
@@ -51,28 +49,22 @@ function createWindow () {
           label: "New file",
           accelerator: `${ctrl}+N`,
           click: () => createWindow(),
-                                                                // create new window func!!!
         },
-        //  {
-        //    label: "New window",         
-        //  accelerator: `${ctrl}+Shift+N`,
-        //    click: () => createWindow(),
-        //  },
         {
           label: "Open",
           accelerator: `${ctrl}+O`,
           click: () => ipcMain.emit("open-document-triggered"),
         },
-        {
-          label: "Save",
-          accelerator: `${ctrl}+S`,
-          click: () => ipcMain.emit("save-document-triggered"),
-        },
-        {
-          label: "Save as",
-          accelerator: `${ctrl}+Shift+S`,
-          click: () => ipcMain.emit("create-document-triggered"),
-        },
+        // {
+        //   label: "Save",
+        //   accelerator: `${ctrl}+S`,
+        //   click: () => ipcMain.emit("save-document-triggered"),
+        // },
+        // {
+        //   label: "Save as",
+        //   accelerator: `${ctrl}+Shift+S`,
+        //   click: () => ipcMain.emit("create-document-triggered"),
+        // },
         { type: "separator" },
         {
           label: "Exit",
@@ -123,7 +115,6 @@ const openFile = (filePath) => {
     if (error) {
       handleError();
     } else {
-      app.addRecentDocument(filePath);
       openedFilePath = filePath;
       mainWindow.webContents.send("document-opened", { filePath, content });
     }
@@ -168,10 +159,6 @@ function SaveAs(content) {
 ipcMain.on("create-document-triggered", (_, content) => {
   SaveAs(content);
 });
-
-// ipcMain.on("file-content-updated", (_, textareaContent) => {
-//   // On textarea change
-// });
 
 ipcMain.on("save-document-triggered", (_, content) => {
   try {

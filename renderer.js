@@ -5,7 +5,6 @@ const path = require("path");
 window.addEventListener("DOMContentLoaded", () => {
     const el = {
       documentName: document.getElementById("documentName"),
-      // newFileBtn: document.getElementById("newFileBtn"),
       openDocumentBtn: document.getElementById("openDocumentBtn"),
       saveDocumentBtn: document.getElementById("saveDocumentBtn"),
       createDocumentBtn: document.getElementById("createDocumentBtn"),
@@ -28,9 +27,6 @@ window.addEventListener("DOMContentLoaded", () => {
     el.saveDocumentBtn.addEventListener("click", () => {
       ipcRenderer.send("save-document-triggered", el.fileTextarea.value);
     });
-    // el.fileTextarea.addEventListener("input", (e) => {
-    //   ipcRenderer.send("file-content-updated", e.target.value);
-    // });
 
     fun = function(e) {
       ipcRenderer.send("file-content-updated", e.target.value);
